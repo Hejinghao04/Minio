@@ -1,0 +1,3 @@
+MINIO_SERVER_IP: http://10.66.115.195:9000
+MINIO_USERNAME: minioadmin
+MINIO_PASSWORD: minioadmin
