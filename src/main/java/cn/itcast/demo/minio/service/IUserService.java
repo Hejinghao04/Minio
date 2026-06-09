@@ -1,6 +1,6 @@
 package cn.itcast.demo.minio.service;
 
-import cn.itcast.demo.minio.config.result.Result;
+import cn.itcast.demo.minio.result.Result;
 import cn.itcast.demo.minio.dto.SatelliteDTO;
 import cn.itcast.demo.minio.dto.UserDTO;
 import cn.itcast.demo.minio.entity.*;

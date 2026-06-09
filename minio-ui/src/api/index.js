@@ -63,4 +63,9 @@ export function uploadFile(file, fileType, sateName) {
   })
 }
 
+/** 分页查询文件 */
+export function getFilePage(params = {}) {
+  return request.get('/fileEnterprisePage', { params })
+}
+
 export default request

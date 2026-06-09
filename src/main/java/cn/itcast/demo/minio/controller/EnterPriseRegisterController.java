@@ -1,7 +1,7 @@
 package cn.itcast.demo.minio.controller;
 
 import cn.itcast.demo.minio.entity.EnterPrise;
-import cn.itcast.demo.minio.config.result.Result;
+import cn.itcast.demo.minio.result.Result;
 import cn.itcast.demo.minio.service.IEnterPriseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

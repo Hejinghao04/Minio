@@ -1,7 +1,7 @@
 package cn.itcast.demo.minio.controller;
 
 
-import cn.itcast.demo.minio.config.result.Result;
+import cn.itcast.demo.minio.result.Result;
 import cn.itcast.demo.minio.dto.SatelliteDTO;
 import cn.itcast.demo.minio.dto.UserDTO;
 import cn.itcast.demo.minio.service.ISatelliteService;
@@ -12,10 +12,7 @@ import cn.itcast.demo.minio.utils.JwtUtil;
 import cn.itcast.demo.minio.vo.SatelliteVO;
 import cn.itcast.demo.minio.vo.UserVO;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;

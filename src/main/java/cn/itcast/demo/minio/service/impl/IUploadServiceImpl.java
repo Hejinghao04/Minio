@@ -2,7 +2,7 @@ package cn.itcast.demo.minio.service.impl;
 
 import cn.itcast.demo.minio.context.BaseContext;
 import cn.itcast.demo.minio.entity.*;
-import cn.itcast.demo.minio.config.result.Result;
+import cn.itcast.demo.minio.result.Result;
 import cn.itcast.demo.minio.mapper.EnterPriseMapper;
 import cn.itcast.demo.minio.mapper.SatelliteMapper;
 import cn.itcast.demo.minio.mapper.UploadMapper;
@@ -11,12 +11,16 @@ import cn.itcast.demo.minio.service.IUploadService;
 import cn.itcast.demo.minio.utils.Context;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.minio.*;
+import io.minio.errors.*;
 import io.minio.http.Method;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -72,7 +76,7 @@ public class IUploadServiceImpl extends ServiceImpl<UploadMapper, SysFile> imple
             if (enterPrise == null) {
                 return Result.error("所属公司不存在");
             }
-            Satellite satellite = satelliteMapper.selectByName(sateName);
+            Satellite satellite = satelliteMapper.selectByName(sateName,epId);
             if (satellite == null) {
                 return Result.error("指定卫星不存在");
             }
@@ -93,12 +97,7 @@ public class IUploadServiceImpl extends ServiceImpl<UploadMapper, SysFile> imple
                     .stream(file.getInputStream(), file.getSize(), -1)
                     .contentType(contentType)
                     .build());
-            String ObjectUrl = minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
-                    .bucket(bucketName)
-                    .object(objectName)
-                    .method(Method.GET)
-                    .expiry(3, TimeUnit.MINUTES)
-                    .build());
+            String ObjectUrl = getUrl(bucketName, objectName);
 
             SysFile sysFile = new SysFile();
             sysFile.setFileName(originalFilename);
@@ -118,6 +117,16 @@ public class IUploadServiceImpl extends ServiceImpl<UploadMapper, SysFile> imple
         }
         BaseContext.removeCurrentId();
         return Result.success("上传成功");
+    }
+
+    public String getUrl(String bucketName, String objectName) throws ErrorResponseException, InsufficientDataException, InternalException, InvalidKeyException, InvalidResponseException, IOException, NoSuchAlgorithmException, XmlParserException, ServerException {
+        String ObjectUrl = minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
+                .bucket(bucketName)
+                .object(objectName)
+                .method(Method.GET)
+                .expiry(3, TimeUnit.MINUTES)
+                .build());
+        return ObjectUrl;
     }
 
     private void ensureBucketExists(String bucketName) throws Exception {

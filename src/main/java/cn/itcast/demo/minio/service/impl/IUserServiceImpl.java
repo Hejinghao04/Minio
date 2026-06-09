@@ -1,6 +1,6 @@
 package cn.itcast.demo.minio.service.impl;
 
-import cn.itcast.demo.minio.config.result.Result;
+import cn.itcast.demo.minio.result.Result;
 import cn.itcast.demo.minio.context.BaseContext;
 import cn.itcast.demo.minio.dto.SatelliteDTO;
 import cn.itcast.demo.minio.dto.UserDTO;
@@ -96,6 +96,7 @@ public class IUserServiceImpl extends ServiceImpl<UserMapper, User> implements I
         if (user == null){
             return Result.error("操作人员信息异常");
         }
+
         Long epId = user.getEPId();
         Satellite satellite = new Satellite();
 
@@ -106,6 +107,7 @@ public class IUserServiceImpl extends ServiceImpl<UserMapper, User> implements I
 
         satelliteMapper.insert(satellite);
 
+        BaseContext.removeCurrentId();
         return Result.success("插入卫星成功");
     }
 }

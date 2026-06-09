@@ -4,6 +4,10 @@ minio:
   password: ${MINIO_PASSWORD}
 
 spring:
+  servlet:
+    multipart:
+      max-file-size: 500MB
+      max-request-size: 500MB
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${DB_URL:jdbc:mysql://localhost:3306/minioupload?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai}
@@ -17,6 +21,7 @@ server:
 mybatis-plus:
   configuration:
     map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
 jwt:
   # 设置jwt签名加密时使用的秘钥（至少256位/32字节）

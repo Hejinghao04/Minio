@@ -1,4 +1,4 @@
-package cn.itcast.demo.minio.config.result;
+package cn.itcast.demo.minio.result;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

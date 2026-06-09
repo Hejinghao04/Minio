@@ -1,7 +1,7 @@
 package cn.itcast.demo.minio.service.impl;
 
 import cn.itcast.demo.minio.entity.EnterPrise;
-import cn.itcast.demo.minio.config.result.Result;
+import cn.itcast.demo.minio.result.Result;
 import cn.itcast.demo.minio.mapper.EnterPriseMapper;
 import cn.itcast.demo.minio.service.IEnterPriseService;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;

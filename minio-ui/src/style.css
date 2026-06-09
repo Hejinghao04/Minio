@@ -223,6 +223,11 @@ button.danger {
   margin-bottom: 24px;
 }
 
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
 /* ---- dropzone ---- */
 .dropzone {
   position: relative;

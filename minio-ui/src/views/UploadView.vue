@@ -146,7 +146,10 @@ function handleLogout() {
           <h1>文件上传</h1>
           <p>当前用户：<strong>{{ user?.username || '-' }}</strong></p>
         </div>
-        <button class="ghost" type="button" @click="handleLogout">退出登录</button>
+        <div class="header-actions">
+          <button class="ghost" type="button" @click="$router.push({ name: 'fileQuery' })">文件查询</button>
+          <button class="ghost" type="button" @click="handleLogout">退出登录</button>
+        </div>
       </header>
 
       <!-- 上传参数：文件类型 + 卫星选择 -->

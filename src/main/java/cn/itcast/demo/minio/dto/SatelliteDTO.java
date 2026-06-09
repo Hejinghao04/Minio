@@ -5,5 +5,11 @@ import lombok.Data;
 @Data
 public class SatelliteDTO {
 
+    private String id;
+
     private String sateName;
+
+    private Long pageNum = 1L;
+
+    private Long pageSize = 10L;
 }
