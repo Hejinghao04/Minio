@@ -19,8 +19,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 @Service
@@ -120,11 +123,23 @@ public class IUploadServiceImpl extends ServiceImpl<UploadMapper, SysFile> imple
     }
 
     public String getUrl(String bucketName, String objectName) throws ErrorResponseException, InsufficientDataException, InternalException, InvalidKeyException, InvalidResponseException, IOException, NoSuchAlgorithmException, XmlParserException, ServerException {
+        // 从 objectName 中提取原始文件名
+        String filename = objectName;
+        int lastSlash = objectName.lastIndexOf('/');
+        if (lastSlash >= 0) {
+            filename = objectName.substring(lastSlash + 1);
+        }
+
+        Map<String, String> queryParams = new HashMap<>();
+        queryParams.put("response-content-disposition",
+                "attachment; filename=\"" + java.net.URLEncoder.encode(filename, "UTF-8") + "\"");
+
         String ObjectUrl = minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
                 .bucket(bucketName)
                 .object(objectName)
                 .method(Method.GET)
                 .expiry(3, TimeUnit.MINUTES)
+                .extraQueryParams(queryParams)
                 .build());
         return ObjectUrl;
     }

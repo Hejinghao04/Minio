@@ -36,6 +36,9 @@ public class LoginController {
     @PostMapping("api/login")
     public Result<UserVO> login(@RequestBody UserDTO userDTO){
         Result<UserVO> login = userService.login(userDTO);
+        if (login.getCode() != 1) {
+            return login;
+        }
         UserVO vo = login.getData();
 
 

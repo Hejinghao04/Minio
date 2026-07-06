@@ -27,9 +27,9 @@ jwt:
   # 设置jwt签名加密时使用的秘钥（至少256位/32字节）
   admin-secret-key: itcast-minio-jwt-secret-key-2024
   # 设置jwt过期时间
-  admin-ttl: 7200000
+  admin-ttl: 20000
   # 设置前端传递过来的令牌名称
   admin-token-name: token
   user-secret-key: itheima-minio-jwt-secret-key-2024
-  user-ttl: 7200000
+  user-ttl: 20000
   user-token-name: authentication

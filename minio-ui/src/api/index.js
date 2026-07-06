@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getToken, clearAuth } from '../utils/auth'
+import { getToken, setToken, clearAuth } from '../utils/auth'
 
 const request = axios.create({
   baseURL: import.meta.env.VITE_API_BASE_URL || '/api',
@@ -17,7 +17,14 @@ request.interceptors.request.use((config) => {
 
 // 响应拦截器：token 过期或无效时跳转登录
 request.interceptors.response.use(
-  (res) => res,
+  (res) => {
+    // 每次请求成功后，检查响应头是否有刷新的 token
+    const newToken = res.headers['token']
+    if (newToken) {
+      setToken(newToken)
+    }
+    return res
+  },
   (err) => {
     if (err.response?.status === 401) {
       clearAuth()

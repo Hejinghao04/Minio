@@ -11,6 +11,7 @@ export default defineConfig(({ mode }) => {
       host: true,
       port: 5173,
       strictPort: false,
+      allowedHosts: ['12642harm9633.vicp.fun','vicp.fun'],
       proxy: {
         '/api': {
           target: backendTarget,
