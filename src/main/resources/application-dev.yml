@@ -1,5 +1,6 @@
 minio:
   ipaddr: ${MINIO_SERVER_IP}
+  public-ipaddr: ${MINIO_PUBLIC_IP}
   username: ${MINIO_USERNAME}
   password: ${MINIO_PASSWORD}
 

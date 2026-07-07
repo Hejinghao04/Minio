@@ -11,6 +11,9 @@ public class ClientConfig {
     @Value("${minio.ipaddr}")
     private String ipaddr;
 
+    @Value("${minio.public-ipaddr}")
+    private String publicIpaddr;
+
     @Value("${minio.username}")
     private String username;
 
@@ -21,6 +24,14 @@ public class ClientConfig {
     public MinioClient minioClient(){
         return MinioClient.builder()
                 .endpoint(ipaddr)
+                .credentials(username,password)
+                .build();
+    }
+
+    @Bean("minioPublicClient")
+    public MinioClient minioPublicClient(){
+        return MinioClient.builder()
+                .endpoint(publicIpaddr)
                 .credentials(username,password)
                 .build();
     }

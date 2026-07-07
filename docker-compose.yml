@@ -43,6 +43,7 @@ services:
       DB_USERNAME: root
       DB_PASSWORD: root
       MINIO_SERVER_IP: http://minio:9000
+      MINIO_PUBLIC_IP: http://123.57.147.58:9000
       MINIO_USERNAME: minioadmin
       MINIO_PASSWORD: minioadmin
     depends_on:
@@ -63,6 +64,22 @@ services:
     depends_on:
       - backend
 
+  # ========== Jenkins ==========
+  jenkins:
+    image: jenkins/jenkins:lts-jdk17
+    container_name: minio-jenkins
+    user: root
+    ports:
+      - "8088:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins-data:/var/jenkins_home
+      - /opt/minio-project:/opt/minio-project
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/bin/docker:/usr/bin/docker
+      - /etc/localtime:/etc/localtime:ro
+
 volumes:
   mysql-data:
   minio-data:
+  jenkins-data:

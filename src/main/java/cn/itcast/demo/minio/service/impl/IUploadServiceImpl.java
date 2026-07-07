@@ -31,6 +31,7 @@ import java.util.concurrent.TimeUnit;
 public class IUploadServiceImpl extends ServiceImpl<UploadMapper, SysFile> implements IUploadService {
 
     private final MinioClient minioClient;
+    private final MinioClient minioPublicClient;
 
     @Autowired
     private UploadMapper uploadMapper;
@@ -42,8 +43,9 @@ public class IUploadServiceImpl extends ServiceImpl<UploadMapper, SysFile> imple
     @Autowired
     private SatelliteMapper satelliteMapper;
 
-    public IUploadServiceImpl(MinioClient minioClient) {
+    public IUploadServiceImpl(MinioClient minioClient, MinioClient minioPublicClient) {
         this.minioClient = minioClient;
+        this.minioPublicClient = minioPublicClient;
     }
 
     @Override
@@ -134,11 +136,11 @@ public class IUploadServiceImpl extends ServiceImpl<UploadMapper, SysFile> imple
         queryParams.put("response-content-disposition",
                 "attachment; filename=\"" + java.net.URLEncoder.encode(filename, "UTF-8") + "\"");
 
-        String ObjectUrl = minioClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
+        String ObjectUrl = minioPublicClient.getPresignedObjectUrl(GetPresignedObjectUrlArgs.builder()
                 .bucket(bucketName)
                 .object(objectName)
                 .method(Method.GET)
-                .expiry(3, TimeUnit.MINUTES)
+                .expiry(7, TimeUnit.DAYS)
                 .extraQueryParams(queryParams)
                 .build());
         return ObjectUrl;
